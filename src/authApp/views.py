@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
 from .forms import EmailAuthenticationForm, RegisterForm, UserPasswordUpdateForm
+from dashboard.models import UserDetails
 
 
 def register_view(request):
@@ -19,6 +20,9 @@ def register_view(request):
             user.set_password(form.cleaned_data['password'])  # Set the password hash
             user.save()
 
+            # Create UserDetails
+            UserDetails.objects.create(user=user, phone_number='', bio='', designation='', organization='')
+
             # Optionally log the user in after successful registration
             login(request, user)
 
@@ -30,7 +34,7 @@ def register_view(request):
     else:
         form = RegisterForm()
 
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'auth/register.html', {'form': form})
 
 def login_view(request):
     if request.user.is_authenticated:

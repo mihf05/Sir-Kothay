@@ -1,83 +1,56 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+{% block title %}Home - Sir Kothay{% endblock %}
 
-<body class="bg-gray-100 relative">
-
-    <header class="bg-white shadow-md py-4 px-6 fixed top-0 w-full flex items-center justify-between">
-        <!-- Logo -->
-        <div class="flex items-center space-x-3">
-            <img src="{% static 'images/nav-logo.png' %}" alt="Logo" class="h-20">
-            <span class="text-xl font-semibold text-gray-700">Sir Kothay?</span>
-        </div>
-
-        <!-- Logout Button -->
-        <a href="{% url 'logout' %}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-red-600">
-            Logout
-        </a>
-    </header>
-
-    <!-- Spacing for Header -->
-    <div class="h-24"></div>
+{% block body %}
+<div class="bg-gray-100 relative pt-4">
 
     <!-- Profile Section -->
-    <section class="max-w-4xl mx-auto bg-white p-4 rounded-lg shadow-md mt-10">
-        <div class="flex flex-col sm:flex-row items-center sm:space-x-8 space-y-4 sm:space-y-0">
+    <section class="max-w-4xl mx-auto bg-gradient-to-r from-blue-50 to-indigo-100 p-6 rounded-xl shadow-lg border border-gray-200">
+        <div class="flex flex-col lg:flex-row items-center lg:space-x-8 space-y-6 lg:space-y-0">
             <!-- User Image -->
-            <div class="relative">
+            <div class="relative group">
                 {% if userd.get_image_url %}
                 <img src="{{ userd.get_image_url }}" alt="User Image"
-                    class="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-gray-300 shadow-md">
+                    class="w-28 h-28 lg:w-36 lg:h-36 rounded-full object-cover border-4 border-white shadow-xl transition-transform group-hover:scale-105">
                 {% else %}
                 <img src="{% static 'images/image.png' %}" alt="User Image"
-                    class="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-gray-300 shadow-md">
+                    class="w-28 h-28 lg:w-36 lg:h-36 rounded-full object-cover border-4 border-white shadow-xl transition-transform group-hover:scale-105">
                 {% endif %}
+                <div class="absolute inset-0 rounded-full bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all"></div>
             </div>
 
             <!-- User Info -->
-            <div class="flex flex-col text-center sm:text-left">
-                <span class="text-2xl sm:text-3xl font-semibold">{{ username }}</span>
-                <span class="text-gray-500 text-base sm:text-lg">{{ userd.user.email }}</span>
-                <span class="text-gray-600 text-sm sm:text-base">{{ userd.phone_number }}</span>
-                <span class="text-gray-600 text-sm sm:text-base">Organization: {{ userd.organization }}</span>
-                <p class="text-gray-600 mt-2 text-lg">{{ userd.bio }}</p>
+            <div class="flex-1 text-center lg:text-left">
+                <h1 class="text-2xl lg:text-3xl font-bold text-gray-800 mb-1">{{ username }}</h1>
+                <p class="text-gray-600 text-sm lg:text-base mb-1">{{ userd.user.email }}</p>
+                <p class="text-gray-600 text-sm lg:text-base mb-1">{{ userd.phone_number }}</p>
+                <p class="text-gray-600 text-sm lg:text-base mb-2">Organization: {{ userd.organization }}</p>
+                <p class="text-gray-700 text-sm lg:text-base italic">{{ userd.bio }}</p>
             </div>
 
-            <!-- Edit Button -->
-            <button onclick="openModal('editProfileModal')"
-                class="sm:ml-auto bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                Edit
-            </button>
-        </div>
-    </section>
-
-    <!-- QR Code Section -->
-    <section class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
-        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <!-- QR Code -->
-            <div class="w-32 h-32 sm:w-40 sm:h-40 bg-gray-300 flex items-center justify-center rounded-md shadow">
-                {% if qrcode %}
-                <img src="{{ qrcode.get_qr_url }}" alt="QR Code">
-                {% else %}
-                <img src="{% static 'images/logo_placeholder.jpg' %}" alt="">
-                {% endif %}
+            <!-- QR Code & Actions -->
+            <div class="flex flex-col items-center space-y-4">
+                <div class="w-24 h-24 lg:w-32 lg:h-32 bg-white flex items-center justify-center rounded-lg shadow-md border">
+                    {% if qrcode %}
+                    <img src="{{ qrcode.get_qr_url }}" alt="QR Code" class="w-full h-full rounded-lg">
+                    {% else %}
+                    <img src="{% static 'images/logo_placeholder.jpg' %}" alt="" class="w-full h-full rounded-lg">
+                    {% endif %}
+                </div>
+                <div class="flex space-x-2">
+                    {% if qrcode %}
+                    <a href="{% url 'download_qr' %}"
+                        class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-blue-700 shadow-md transition-all">Download</a>
+                    {% else %}
+                    <a href="{% url 'generate_qr' %}"
+                        class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-lg hover:from-green-600 hover:to-green-700 shadow-md transition-all">Generate</a>
+                    {% endif %}
+                    <!-- <button onclick="openModal('editProfileModal')"
+                        class="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-purple-700 shadow-md transition-all">Edit</button> -->
+                </div>
             </div>
-
-            <!-- Generate Button -->
-            {% if qrcode %}
-            <a href="{% url 'download_qr' %}"
-                class="w-full sm:w-auto bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Download</a>
-            {% else %}
-            <a href="{% url 'generate_qr' %}"
-                class="w-full sm:w-auto bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Generate</a>
-            {% endif %}
         </div>
     </section>
 
@@ -248,6 +221,4 @@
         }
     </script>
 
-</body>
-
-</html>
+{% endblock %}
