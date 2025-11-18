@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - Sir Kothay{% endblock %}
+
+{% block body %}
+<style>
+    .brand-color {
+        color: rgb(245, 103, 33);
+    }
+    .brand-bg {
+        background-color: rgb(245, 103, 33);
+    }
+    .hover-scale {
+        transition: transform 0.2s ease-in-out;
+    }
+    .hover-scale:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+
+    <!-- Signup Container -->
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md hover-scale">
+        <h2 class="text-3xl font-bold text-center brand-color mb-6">Sign Up for Sir Kothay</h2>
+
+        <!-- Error Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-500 text-center mb-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Form -->
+        <form class="space-y-6" action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <!-- Username Input -->
+            <div>
+                <label for="id_username" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                <input
+                    class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    id="id_username"
+                    name="username"
+                    type="text"
+                    placeholder="Your Full Name"
+                    required
+                />
+                {% if form.username.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.username.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Email Input -->
+            <div>
+                <label for="id_email" class="block text-gray-700 font-medium mb-2">Email</label>
+                <input
+                    class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    id="id_email"
+                    name="email"
+                    type="email"
+                    placeholder="you@somewhere.com"
+                    required
+                />
+                {% if form.email.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.email.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Password Input -->
+            <div>
+                <label for="id_password" class="block text-gray-700 font-medium mb-2">Password</label>
+                <input
+                    class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    id="id_password"
+                    name="password"
+                    type="password"
+                    placeholder="********"
+                    required
+                />
+                {% if form.password.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.password.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Confirm Password Input -->
+            <div>
+                <label for="id_confirm_password" class="block text-gray-700 font-medium mb-2">Confirm Password</label>
+                <input
+                    class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                    id="id_confirm_password"
+                    name="confirm_password"
+                    type="password"
+                    placeholder="********"
+                    required
+                />
+                {% if form.confirm_password.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.confirm_password.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Sign Up Button -->
+            <button type="submit" class="w-full bg-gradient-to-r from-purple-800 to-green-500 text-white py-3 rounded-lg hover:from-pink-500 hover:to-green-500 font-semibold hover-scale">
+                Sign Up
+            </button>
+        </form>
+
+        <!-- Login Link -->
+        <p class="text-sm text-center text-gray-600 mt-6">
+            Already have an account? <a href="{% url 'login' %}" class="text-blue-500 hover:underline font-medium">Login</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

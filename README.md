@@ -2,7 +2,7 @@
 
 *"[Sir Kothay?](!https://sirkothay.pythonanywhere.com/)"* is a lightweight web application that allows users to leave messages for others via a unique, shareable URL. Each message will have a dedicated page, and a QR code will be generated for easy sharing.  
 
-The platform is built using **Django** and **Tailwind CSS**, hosted on **PythonAnywhere**. Future updates will include scheduling and a messaging system.  
+The platform is built using **Django** and **Tailwind CSS**, hosted on **PythonAnywhere**. Recent updates have introduced user profiles, dashboard management, and improved UI styling.  
 
 ## Tech Stack  
 
@@ -19,6 +19,7 @@ The platform is built using **Django** and **Tailwind CSS**, hosted on **PythonA
 ✅ **QR Code Support** – A QR code will be generated for easy sharing.  
 ✅ **Message Viewing** – Anyone with the link can view the message.  
 ✅ **User Profiles** – Users can register and manage messages.  
+✅ **User Dashboard** – Logged-in users can manage their profiles and messages.  
 
 
 ## Required Pages  
@@ -62,11 +63,10 @@ The platform is built using **Django** and **Tailwind CSS**, hosted on **PythonA
 
 - **Scheduling Messages** – Set messages to appear at specific times.  
 - **Messaging System** – Users can send direct messages.  
-- **Dashboard (`/dashboard/`)** – Logged-in users can manage all their messages.  
 
 
 ## Conclusion  
 
-*"Sir Kothay Achen"* provides a seamless way to share messages via unique URLs and QR codes. With **Django** and **Tailwind CSS**, it is lightweight yet powerful. **PythonAnywhere** will handle hosting. Initially, the platform will focus on anonymous message sharing, with future updates introducing **user accounts, scheduling, and direct messaging**.  
+*"Sir Kothay Achen"* provides a seamless way to share messages via unique URLs and QR codes. With **Django** and **Tailwind CSS**, it is lightweight yet powerful. **PythonAnywhere** will handle hosting. The platform now includes user accounts and dashboard management, with future updates planned for scheduling and direct messaging.  
 
 **Contributions & feedback are welcome!**  

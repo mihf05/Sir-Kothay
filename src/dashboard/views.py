@@ -12,7 +12,7 @@ from django.contrib import messages
 def home_view(request):
     user = user=request.user
     messages = BroadcastMessage.objects.all().filter(user=user)
-    userd = UserDetails.objects.get(user=user)
+    userd, created = UserDetails.objects.get_or_create(user=user, defaults={'phone_number': '', 'bio': '', 'designation': '', 'organization': ''})
     
     try:
         qrcode = QRCode.objects.get(user=user)
@@ -22,6 +22,25 @@ def home_view(request):
     return render(request, 'dashboard/home.html', {
         'messages': messages,
         'userd': userd,
+        'qrcode': qrcode,
+        'username': user.username.replace('_', ' ')
+    })
+
+@login_required(login_url='login')
+def profile_view(request):
+    user = request.user
+    userd, created = UserDetails.objects.get_or_create(user=user, defaults={'phone_number': '', 'bio': '', 'designation': '', 'organization': ''})
+    messages = BroadcastMessage.objects.filter(user=user)
+    
+    try:
+        qrcode = QRCode.objects.get(user=user)
+    except QRCode.DoesNotExist:
+        qrcode = None
+    
+    return render(request, 'dashboard/profile.html', {
+        'user': user,
+        'userd': userd,
+        'messages': messages,
         'qrcode': qrcode,
         'username': user.username.replace('_', ' ')
     })
