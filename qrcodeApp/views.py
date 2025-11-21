@@ -137,8 +137,7 @@ def download_qr_with_info(request):
                 f"<b>Email:</b> {request.user.email}<br/>" \
                 f"<b>Phone:</b> {user_details.phone_number}<br/>" \
                 f"<b>Organization:</b> {user_details.organization}<br/>" \
-                f"<b>Designation:</b> {user_details.designation}<br/>" \
-                f"<b>Bio:</b> {user_details.bio}"
+                f"<b>Designation:</b> {user_details.designation}"
     left_flowables.append(Paragraph(info_text, styles['Normal']))
 
     # Right side: QR code
