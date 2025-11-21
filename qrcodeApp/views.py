@@ -143,10 +143,8 @@ def download_qr_with_info(request):
 
     # Right side: QR code
     right_flowables = []
-    right_flowables.append(RLImage(qr_img_path, width=2.75*inch, height=2.75*inch))
+    right_flowables.append(RLImage(qr_img_path, width=3.25*inch, height=3.25*inch))
     right_flowables.append(Spacer(1, 12))
-    right_flowables.append(Paragraph("Scan the QR code to view broadcast messages.", styles['Normal']))
-
     # Create table
     data = [
         [left_flowables, right_flowables]
