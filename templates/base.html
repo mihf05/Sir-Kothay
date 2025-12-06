@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Sir Kothay?{% endblock %}</title>
+
+  <!-- Tailwind CSS v3 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body>
+
+  <!-- Main Content -->
+  <main class="flex-1 pt-0 md:pt-24 pb-20 md:pb-0 bg-gray-50 min-h-screen flex flex-col">
+    <div class="px-4">
+      {% block body %}
+      {% endblock %}
+    </div>
+  </main>
+
+  <!-- Fixed Bottom Navbar on Mobile, Top on Desktop -->
+  <nav class="fixed bottom-0 left-0 right-0 md:top-0 md:bottom-auto z-50 bg-white/80 backdrop-blur-lg border-t md:border-b border-gray-200/50">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Desktop Navbar (Top) -->
+      <div class="hidden md:flex items-center justify-between px-8 py-4">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="flex items-center gap-3">
+          <img src="{% static 'images/nav-logo.png' %}" class="h-10 rounded-lg shadow-md" alt="Logo" />
+          <span class="text-xl font-bold text-gray-800">Sir Kothay?</span>
+        </a>
+
+        <!-- Desktop Links -->
+        <div class="flex items-center gap-6 text-sm font-medium">
+          {% if user.is_authenticated %}
+            <a href="{% url 'home' %}" class="text-gray-700 hover:text-green-600">Dashboard</a>
+            <a href="{% url 'profile' %}" class="text-gray-700 hover:text-green-600">Profile</a>
+            <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-700">Logout</a>
+          {% else %}
+            <a href="{% url 'index_page' %}" class="text-gray-700 hover:text-green-600">Home</a>
+            <a href="{% url 'about' %}" class="text-gray-700 hover:text-green-600">About</a>
+            <a href="{% url 'login' %}" class="text-gray-700 hover:text-green-600">Login</a>
+            <a href="{% url 'register' %}" class="px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Sign Up</a>
+          {% endif %}
+          <a href="https://github.com/UIU-Developers-Hub/Sir-Kothay" target="_blank" class="text-gray-600 hover:text-black">
+            <i class="bi bi-github text-xl"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Bottom Navbar -->
+      <div class="md:hidden">
+      <div class="flex items-center justify-around py-3 bg-white border-t border-gray-200">
+        
+        <!-- Home / Dashboard -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'home' %}" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-gray-600 hover:text-green-600 hover:bg-green-50 transition {% if request.resolver_match.url_name == 'home' %}text-green-600 bg-green-50{% endif %}">
+            <i class="bi bi-house-door-fill text-2xl"></i>
+            <span class="text-xs font-medium">Home</span>
+          </a>
+        {% else %}
+          <a href="{% url 'index_page' %}" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-gray-600 hover:text-green-600 hover:bg-green-50 transition {% if request.resolver_match.url_name == 'index_page' %}text-green-600 bg-green-50{% endif %}">
+            <i class="bi bi-house-fill text-2xl"></i>
+            <span class="text-xs font-medium">Home</span>
+          </a>
+          <a href="{% url 'about' %}" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-gray-600 hover:text-green-600 hover:bg-green-50 transition {% if request.resolver_match.url_name == 'about' %}text-green-600 bg-green-50{% endif %}">
+          <i class="bi bi-info-circle-fill text-2xl"></i>
+          <span class="text-xs font-medium">About</span>
+        </a>
+        {% endif %}
+        <!-- Profile / Login -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'profile' %}" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-gray-600 hover:text-green-600 hover:bg-green-50 transition {% if request.resolver_match.url_name == 'profile' %}text-green-600 bg-green-50{% endif %}">
+            <i class="bi bi-person-circle text-2xl"></i>
+            <span class="text-xs font-medium">Profile</span>
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-gray-600 hover:text-green-600 hover:bg-green-50 transition">
+            <i class="bi bi-box-arrow-in-right text-2xl"></i>
+            <span class="text-xs font-medium">Login</span>
+          </a>
+        {% endif %}
+
+        <!-- Sign Up (Floating Action Button Style - Only for guests) -->
+        {% if not user.is_authenticated %}
+          <a href="{% url 'register' %}" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-gray-600 hover:text-green-600 hover:bg-green-50 transition">
+              <i class="bi bi-person-plus-fill text-2xl"></i>
+            <span class="text-xs font-medium">Sign Up</span>
+          </a>
+        {% endif %}
+
+        <!-- Logout (Only for authenticated users) -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-red-500 hover:text-red-600 hover:bg-red-50 transition">
+            <i class="bi bi-box-arrow-right text-2xl"></i>
+            <span class="text-xs font-medium">Logout</span>
+          </a>
+        {% endif %}
+
+        <!-- GitHub (Always visible on mobile too) -->
+        <a href="https://github.com/UIU-Developers-Hub/Sir-Kothay" target="_blank" class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl text-gray-600 hover:text-black transition">
+          <i class="bi bi-github text-2xl"></i>
+          <span class="text-xs font-medium">GitHub</span>
+        </a>
+
+      </div>
+    </div>
+    </div>
+  </nav>
+
+  <footer class="py-12 px-6 mt-4 mb-4 bg-gray-900 text-gray-300">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img src="{% static 'images/nav-logo.png' %}" class="h-10 rounded-lg" alt="Logo">
+            <span class="text-2xl font-bold text-white">Sir Kothay?</span>
+          </div>
+          <p class="text-gray-400">Simple notes. Strong bonds.</p>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-white mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="{% url 'index' %}#features" class="hover:text-white transition">Features</a></li>
+            <li><a href="{% url 'about' %}" class="hover:text-white transition">About Us</a></li>
+            <li><a href="{% url 'register' %}" class="hover:text-white transition">Sign Up</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-white mb-4">Connect</h4>
+          <div class="flex gap-4">
+            <a href="https://github.com/UIU-Developers-Hub/Sir-Kothay" class="text-2xl hover:text-white transition">
+              <i class="bi bi-github"></i>
+            </a>
+            <a href="https://www.facebook.com/uiudevelopershub" class="text-2xl hover:text-white transition">
+              <i class="bi bi-facebook"></i>
+            </a>
+          </div>
+          <div class="flex items-center gap-2 mt-6 text-sm">
+            <img src="https://github.com/UIU-Developers-Hub.png" class="h-8 w-8 rounded-full" alt="UIU Developers Hub">
+            <span>© 2025 Sir Kothay. Made with ❤️ by <a href="https://github.com/UIU-Developers-Hub" class="text-green-400 hover:underline">UIU Developers Hub</a></span>
+          </div>
+          <div class="flex gap-2 mt-2">
+            {% for contributor in contributors %}
+            <a href="{{ contributor.profileUrl }}" target="_blank">
+              <img src="{{ contributor.imageUrl }}" class="h-8 w-8 rounded-full" alt="Contributor">
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
