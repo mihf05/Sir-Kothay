@@ -8,7 +8,7 @@
 
     <!-- Profile Header Card -->
     <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
-        <div class="bg-gradient-to-r from-green-500 to-emerald-600 h-32 md:h-40"></div>
+        <div class="h-32 md:h-40" style="background: linear-gradient(to right, #f68b1f, #f68b1f);"></div>
         
         <div class="relative px-6 pb-8 pt-4 -mt-16 md:-mt-20">
             <div class="flex flex-col md:flex-row items-center md:items-end gap-6">
@@ -54,8 +54,8 @@
     <!-- Edit Profile Form Card -->
     <div id="profile-form" class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
         <div class="flex items-center gap-3 mb-8">
-            <div class="p-3 bg-green-100 rounded-xl">
-                <i class="bi bi-person-gear text-2xl text-green-600"></i>
+            <div class="p-3 rounded-xl" style="background-color: #fef3e8;">
+                <i class="bi bi-person-gear text-2xl" style="color: #f68b1f;"></i>
             </div>
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">Edit Profile</h2>
@@ -70,7 +70,7 @@
                 <!-- Username -->
                 <div>
                     <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                        <i class="bi bi-person-circle text-green-600"></i> Full Name
+                        <i class="bi bi-person-fill" style="color: #f68b1f;"></i> Username
                     </label>
                     <input type="text" name="username" value="{{ user.username }}" required
                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
@@ -79,7 +79,7 @@
                 <!-- Email -->
                 <div>
                     <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                        <i class="bi bi-envelope-fill text-green-600"></i> Email Address
+                        <i class="bi bi-envelope-fill" style="color: #f68b1f;"></i> Email
                     </label>
                     <input type="email" name="email" value="{{ user.email }}" required
                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
@@ -88,7 +88,7 @@
                 <!-- Phone -->
                 <div>
                     <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                        <i class="bi bi-telephone-fill text-green-600"></i> Phone Number
+                        <i class="bi bi-telephone-fill" style="color: #f68b1f;"></i> Phone Number
                     </label>
                     <input type="text" name="phone_number" value="{{ userd.phone_number }}"
                            placeholder="+880 1XXX-XXXXXX"
@@ -98,7 +98,7 @@
                 <!-- Designation -->
                 <div>
                     <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                        <i class="bi bi-briefcase-fill text-green-600"></i> Designation
+                        <i class="bi bi-briefcase-fill" style="color: #f68b1f;"></i> Designation
                     </label>
                     <input type="text" name="designation" value="{{ userd.designation }}"
                            placeholder="e.g. Student, Software Engineer"
@@ -118,7 +118,7 @@
                 <!-- Profile Image -->
                 <div>
                     <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                        <i class="bi bi-image-fill text-green-600"></i> Profile Picture
+                        <i class="bi bi-image" style="color: #f68b1f;"></i> Profile Image
                     </label>
                     <input type="file" name="profile_image" accept="image/*"
                            class="w-full px-4 py-3 border border-gray-300 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition">
@@ -128,7 +128,7 @@
             <!-- Bio -->
             <div>
                 <label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                    <i class="bi bi-chat-quote-fill text-green-600"></i> Bio
+                    <i class="bi bi-chat-quote-fill" style="color: #f68b1f;"></i> Bio
                 </label>
                 <textarea name="bio" rows="4" placeholder="Tell us a little about yourself..."
                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition resize-none">{{ userd.bio }}</textarea>
@@ -153,7 +153,7 @@
     <!-- Mobile Floating Edit Button -->
     <div class="md:hidden fixed bottom-20 right-6 z-40">
         <button onclick="document.getElementById('profile-form').scrollIntoView({behavior: 'smooth'})"
-                class="bg-green-600 text-white p-4 rounded-full shadow-2xl hover:bg-green-700 transition transform hover:scale-110">
+                class="text-white p-4 rounded-full shadow-2xl transition transform hover:scale-110" style="background-color: #f68b1f;" onmouseover="this.style.backgroundColor='#e67a0f'" onmouseout="this.style.backgroundColor='#f68b1f'">
             <i class="bi bi-pencil-fill text-2xl"></i>
         </button>
     </div>

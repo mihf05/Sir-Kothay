@@ -6,10 +6,10 @@
 {% block body %}
 <style>
     .brand-color {
-        color: rgb(245, 103, 33);
+        color: #f68b1f;
     }
     .brand-bg {
-        background-color: rgb(245, 103, 33);
+        background-color: #f68b1f;
     }
     .hover-scale {
         transition: transform 0.2s ease-in-out;
@@ -60,7 +60,7 @@
             </div>
 
             <!-- Login Button -->
-            <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 font-semibold hover-scale">
+            <button type="submit" class="w-full text-white py-3 rounded-lg font-semibold hover-scale" style="background-color: #f68b1f;" onmouseover="this.style.backgroundColor='#e67a0f'" onmouseout="this.style.backgroundColor='#f68b1f'">
                 Login
             </button>
         </form>
