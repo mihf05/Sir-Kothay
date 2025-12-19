@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.db import transaction
 from .models import BroadcastMessage
 from .serializers import BroadcastMessageSerializer
 from dashboard.models import UserDetails
@@ -46,8 +47,17 @@ class BroadcastMessageViewSet(viewsets.ModelViewSet):
         if message.user != request.user and not request.user.is_staff:
             return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
         
-        message.active = True
-        message.save()
+        # Use atomic transaction with row locking to prevent race conditions
+        with transaction.atomic():
+            # Lock and deactivate all user's messages
+            BroadcastMessage.objects.select_for_update().filter(
+                user=request.user, active=True
+            ).update(active=False)
+            
+            # Activate the selected message
+            message.active = True
+            message.save()
+        
         return Response({'message': 'Message set as active'})
 
 
