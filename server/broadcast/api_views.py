@@ -47,14 +47,13 @@ class BroadcastMessageViewSet(viewsets.ModelViewSet):
         if message.user != request.user and not request.user.is_staff:
             return Response({'error': 'Permission denied'}, status=status.HTTP_403_FORBIDDEN)
         
-        # Use atomic transaction with row locking to prevent race conditions
         with transaction.atomic():
-            # Lock and deactivate all user's messages
+            message = BroadcastMessage.objects.select_for_update().get(pk=pk)
+
             BroadcastMessage.objects.select_for_update().filter(
-                user=request.user, active=True
+                user=message.user, active=True
             ).update(active=False)
             
-            # Activate the selected message
             message.active = True
             message.save()
         
@@ -67,13 +66,11 @@ def get_user_broadcast(request, user_slug):
     try:
         user_details = UserDetails.objects.select_related('user').get(_slug=user_slug)
         
-        # Get active broadcast message if exists
         active_message = BroadcastMessage.objects.filter(
             user=user_details.user,
             active=True
         ).first()
         
-        # Build response with user details and active message
         response_data = {
             'username': user_details.user.username,
             'user_username': user_details.user.username,
